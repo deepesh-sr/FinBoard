@@ -15,15 +15,45 @@ function App() {
   return (
     <>
       <div className='h-screen bg-gray-900'>
-        <div className='h-1/2 w-1/2 text-white'>
+        <div className='w-full text-white'>
         <Table>
           <TableCaption>A list of your recent invoices.</TableCaption>
           <TableHeader>
-            <TableRow>
-              <TableHead className="w-[100px]">Invoice</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Method</TableHead>
-              <TableHead className="text-right">Amount</TableHead>
+            <TableRow >
+              <TableHead className="text-white">No</TableHead>
+              <TableHead className="text-white">Particulars</TableHead>
+              <TableHead className="text-white">Purchase Price</TableHead>
+              <TableHead className="text-white">Qty</TableHead>
+              <TableHead className="text-white">Investment</TableHead>
+              <TableHead className="text-white">Portfolio (%)</TableHead>
+              <TableHead className="text-white">NSE/BSE</TableHead>
+              <TableHead className="text-white">CMP</TableHead>
+              <TableHead className="text-white">Present value</TableHead>
+              <TableHead className="text-white">Gain/Loss</TableHead>
+              <TableHead className="text-white">Gain/Loss (%)</TableHead>
+              <TableHead className="text-white">Market Cap</TableHead>
+              <TableHead className="text-white">P/E (TTM)</TableHead>
+              <TableHead className="text-white">Latest Earnings</TableHead>
+              <TableHead className="text-white">Revenue (TTM)</TableHead>
+              <TableHead className="text-white">EBITDA (TTM)</TableHead>
+              <TableHead className="text-white">EBITDA (%)</TableHead>
+              <TableHead className="text-white">PAT</TableHead>
+              <TableHead className="text-white">PAT (%)</TableHead>
+              <TableHead className="text-white">CFO (March 24)</TableHead>
+              <TableHead className="text-white">CFO (5 years)</TableHead>
+              <TableHead className="text-white">Free Cash Flow (5 years)</TableHead>
+              <TableHead className="text-white">Debt to Equity</TableHead>
+              <TableHead className="text-white">Book Value</TableHead>
+              <TableHead className="text-white">Revenue</TableHead>
+              <TableHead className="text-white">EBITDA</TableHead>
+              <TableHead className="text-white">Profit</TableHead>
+              <TableHead className="text-white">Market Cap</TableHead>
+              <TableHead className="text-white">Price to Sales</TableHead>
+              <TableHead className="text-white">CFO to EBITDA</TableHead>
+              <TableHead className="text-white">CFO to PAT</TableHead>
+              <TableHead className="text-white">Price to book</TableHead>
+              <TableHead className="text-white">Stage-2</TableHead>
+              <TableHead className="text-white">Sale price</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
