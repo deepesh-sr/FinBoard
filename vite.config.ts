@@ -18,6 +18,9 @@ export default defineConfig({
         target: 'https://faucal-margaret-lowerable.ngrok-free.dev',
         changeOrigin: true,
         secure: false,
+        headers: {
+          'ngrok-skip-browser-warning': 'true'
+        }
       }
     }
   }

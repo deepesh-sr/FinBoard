@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import { Button } from './components/ui/button';
+import { useEffect, useState } from 'react'
 import {
   Table,
   TableBody,
@@ -11,7 +10,28 @@ import {
 } from "@/components/ui/table"
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [arrayData, setArrayData] = useState<any[]>([]);
+
+  useEffect(()=>{
+    const fetchData = async () => {
+      try {
+        const res = await fetch("/api/stocks");
+        const data = await res.json();
+
+        console.log(data);
+        setArrayData(data.data);
+      } catch (error) {
+        console.error("Error:", error);
+        setTimeout(fetchData, 30000);
+      }
+    };
+    
+    fetchData(); 
+    
+    const interval = setInterval(fetchData, 10000);
+    return () => clearInterval(interval);
+  },[])
+
   return (
     <>
       <div className='h-screen bg-gray-900'>
@@ -57,12 +77,45 @@ function App() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow>
-              <TableCell className="font-medium">INV001</TableCell>
-              <TableCell>Paid</TableCell>
-              <TableCell>Credit Card</TableCell>
-              <TableCell className="text-right">$250.00</TableCell>
-            </TableRow>
+            {arrayData.map((stock, index) => (
+              <TableRow key={index}>
+                <TableCell className="font-medium text-white">{index + 1}</TableCell>
+                <TableCell className="text-white">{stock.company_name || 'N/A'}</TableCell>
+                <TableCell className="text-white">N/A</TableCell>
+                <TableCell className="text-white">N/A</TableCell>
+                <TableCell className="text-white">N/A</TableCell>
+                <TableCell className="text-white">N/A</TableCell>
+                <TableCell className="text-white">{stock.symbol || 'N/A'}</TableCell>
+                <TableCell className="text-white">{stock.cmp || 'N/A'}</TableCell>
+                <TableCell className="text-white">N/A</TableCell>
+                <TableCell className="text-white">N/A</TableCell>
+                <TableCell className="text-white">N/A</TableCell>
+                <TableCell className="text-white">{stock.market_cap || 'N/A'}</TableCell>
+                <TableCell className="text-white">{stock.pe_ratio || 'N/A'}</TableCell>
+                <TableCell className="text-white">{stock.latest_earnings || 'N/A'}</TableCell>
+                <TableCell className="text-white">{stock.revenue_ttm || 'N/A'}</TableCell>
+                <TableCell className="text-white">{stock.ebitda_ttm || 'N/A'}</TableCell>
+                <TableCell className="text-white">{stock.ebitda_percentage || 'N/A'}</TableCell>
+                <TableCell className="text-white">{stock.pat || 'N/A'}</TableCell>
+                <TableCell className="text-white">{stock.pat_percentage || 'N/A'}</TableCell>
+                <TableCell className="text-white">{stock.cfo_march_24 || 'N/A'}</TableCell>
+                <TableCell className="text-white">{stock.cfo_5_years || 'N/A'}</TableCell>
+                <TableCell className="text-white">{stock.free_cash_flow_5_years || 'N/A'}</TableCell>
+                <TableCell className="text-white">{stock.debt_to_equity || 'N/A'}</TableCell>
+                <TableCell className="text-white">{stock.book_value || 'N/A'}</TableCell>
+                <TableCell className="text-white">{stock.revenue_ttm || 'N/A'}</TableCell>
+                <TableCell className="text-white">{stock.ebitda_ttm || 'N/A'}</TableCell>
+                <TableCell className="text-white">{stock.pat || 'N/A'}</TableCell>
+                <TableCell className="text-white">{stock.market_cap || 'N/A'}</TableCell>
+                <TableCell className="text-white">{stock.price_to_sales || 'N/A'}</TableCell>
+                <TableCell className="text-white">{stock.cfo_to_ebitda || 'N/A'}</TableCell>
+                <TableCell className="text-white">{stock.cfo_to_pat || 'N/A'}</TableCell>
+                <TableCell className="text-white">{stock.price_to_book || 'N/A'}</TableCell>
+                <TableCell className="text-white">N/A</TableCell>
+                <TableCell className="text-white">N/A</TableCell>
+              </TableRow>
+            ))}
+             
           </TableBody>
         </Table>
         </div>
