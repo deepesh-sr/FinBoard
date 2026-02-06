@@ -19,15 +19,17 @@ function App() {
   const [arrayData, setArrayData] = useState<any[]>([]);
   const [selectedSector, setSelectedSector] = useState<string>("All");
 
+  const API_URL = import.meta.env.VITE_API_URL || '';
+
   // Fetch full stock details once
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch("/api/stocks",{
-          method : 'GET',
-          headers : {
+        const res = await fetch(`${API_URL}/api/stocks`, {
+          method: 'GET',
+          headers: {
             'ngrok-skip-browser-warning': 'true'
-          } 
+          }
         });
         const data = await res.json();
         console.log("Full data:", data);
@@ -44,9 +46,9 @@ function App() {
   useEffect(() => {
     const fetchCMP = async () => {
       try {
-        const res = await fetch("/api/prices",{
-           method : 'GET',
-          headers : {
+        const res = await fetch(`${API_URL}/api/prices`, {
+          method: 'GET',
+          headers: {
             'ngrok-skip-browser-warning': 'true'
           }
         });
