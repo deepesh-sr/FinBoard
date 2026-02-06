@@ -46,20 +46,21 @@ function App() {
   useEffect(() => {
     const fetchCMP = async () => {
       try {
-        const res = await fetch(`${API_URL}/api/prices`, {
-          method: 'GET',
-          headers: {
-            'ngrok-skip-browser-warning': 'true'
+        const res = await fetch("/api/prices",{
+          method : 'GET',
+          headers : {
+            'ngrok-skip-browser-warning' : 'true'
           }
         });
         const data = await res.json();
+        console.log(data)
         console.log("CMP updated at:", new Date().toLocaleTimeString());
-
+        
         // Update CMP prices by index (API returns prices in same order as stocks)
-        setArrayData(prevData =>
+        setArrayData(prevData => 
           prevData.map((stock, index) => ({
             ...stock,
-            cmp: data.data[index]?.cmp ?? stock.cmp
+            cmp: data.data[index]?.cmp
           }))
         );
       } catch (error) {
@@ -67,8 +68,8 @@ function App() {
       }
     };
 
-    fetchCMP();
-    const interval = setInterval(fetchCMP, 10000);
+    fetchCMP(); 
+    const interval = setInterval(fetchCMP, 10000); 
     return () => clearInterval(interval);
   }, [])
 
@@ -90,13 +91,14 @@ function App() {
   return (
     <div className='min-h-screen bg-black text-white'>
       <header className='border-b border-zinc-800 bg-zinc-950'>
-        <div className='flex justify-between items-center px-8 py-4'>
-          <h1 className='text-xl font-semibold tracking-wide'>FINBOARD</h1>
+        <div className='flex flex-col md:flex-row justify-between items-center gap-4 px-4 md:px-8 py-4'>
+          <h1 className='text-lg md:text-xl font-semibold tracking-wide'>FINBOARD</h1>
+          
           <div className='flex gap-3 items-center'>
-            <h1 className='text-xl font-sans tracking-wide'>Filter</h1>
+            <h1 className='text-sm md:text-xl font-sans tracking-wide'>Filter</h1>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" className='bg-zinc-900 border-zinc-700 text-white hover:bg-zinc-800'>
+                <Button variant="outline" className='bg-zinc-900 border-zinc-700 text-white hover:bg-zinc-800 text-sm md:text-base'>
                   {selectedSector}
                 </Button>
               </DropdownMenuTrigger>
@@ -113,7 +115,8 @@ function App() {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          <a href='https://github.com/deepesh-sr/FinBoard.git' className='text-sm text-zinc-400 hover:text-white transition'>
+          
+          <a href='https://github.com/deepesh-sr/FinBoard.git' className='text-xs md:text-sm text-zinc-400 hover:text-white transition'>
             SOURCE CODE
           </a>
         </div>
