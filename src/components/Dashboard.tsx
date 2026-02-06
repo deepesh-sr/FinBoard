@@ -19,6 +19,7 @@ import {
 function Dashboard() {
   const [arrayData, setArrayData] = useState<any[]>([]);
   const [selectedSector, setSelectedSector] = useState<string>("All");
+  const [isLoading, setIsLoading] = useState(true);
 
   const API_URL = import.meta.env.VITE_API_URL || '';
 
@@ -37,6 +38,8 @@ function Dashboard() {
         setArrayData(data.data || []);
       } catch (error) {
         console.error("Error:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -91,6 +94,19 @@ function Dashboard() {
   const filteredData = selectedSector === "All" 
     ? arrayData 
     : arrayData.filter(stock => stock.sector === selectedSector);
+
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div className='min-h-screen bg-black text-white flex items-center justify-center'>
+        <div className='text-center'>
+          <div className='text-4xl mb-4 animate-pulse'>⏳</div>
+          <p className='text-xl text-zinc-300'>Initial loading may take some time</p>
+          <p className='text-lg text-zinc-400 mt-2'>Bear with me :)</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className='min-h-screen bg-black text-white'>
