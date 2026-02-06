@@ -12,14 +12,12 @@ import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 function App() {
   const [arrayData, setArrayData] = useState<any[]>([]);
+  const [selectedSector, setSelectedSector] = useState<string>("All");
 
   // Fetch full stock details once
   useEffect(() => {
@@ -69,25 +67,37 @@ function App() {
   // Calculate total investment
   const totalInvestment = arrayData.length * purchasePrice * qty;
 
+  // Get unique sectors
+  const sectors = ["All", ...new Set(arrayData.map(stock => stock.sector).filter(Boolean))];
+
+  // Filter stocks by sector
+  const filteredData = selectedSector === "All" 
+    ? arrayData 
+    : arrayData.filter(stock => stock.sector === selectedSector);
+
   return (
     <div className='min-h-screen bg-black text-white'>
       <header className='border-b border-zinc-800 bg-zinc-950'>
         <div className='flex justify-between items-center px-8 py-4'>
           <h1 className='text-xl font-semibold tracking-wide'>FINBOARD</h1>
-          <div>
+          <div className='flex gap-3 items-center'>
+            <h1 className='text-xl font-sans tracking-wide'>Filter</h1>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline">Open</Button>
+                <Button variant="outline" className='bg-zinc-900 border-zinc-700 text-white hover:bg-zinc-800'>
+                  {selectedSector}
+                </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuGroup>
-                  <DropdownMenuLabel>Financial Sector</DropdownMenuLabel>
-                  <DropdownMenuItem>Tech Sector</DropdownMenuItem>
-                  <DropdownMenuItem>Consume Sector</DropdownMenuItem>
-                  <DropdownMenuItem>Power Sector</DropdownMenuItem>
-                  <DropdownMenuItem>Pipe Sector</DropdownMenuItem>
-                  <DropdownMenuItem>Other Sector</DropdownMenuItem>
-                </DropdownMenuGroup>
+              <DropdownMenuContent className='bg-zinc-900 border-zinc-700'>
+                {sectors.map(sector => (
+                  <DropdownMenuItem 
+                    key={sector} 
+                    onClick={() => setSelectedSector(sector)}
+                    className='text-zinc-300 hover:bg-zinc-800 hover:text-white focus:bg-zinc-800 focus:text-white'
+                  >
+                    {sector}
+                  </DropdownMenuItem>
+                ))}
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
@@ -139,7 +149,7 @@ function App() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {arrayData.map((stock, index) => {
+            {filteredData.map((stock, index) => {
               const investment = purchasePrice * qty;
               const presentValue = stock.cmp * qty;
               const gainLoss = presentValue - investment;
