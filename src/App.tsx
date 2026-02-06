@@ -23,7 +23,12 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch("/api/stocks");
+        const res = await fetch("/api/stocks",{
+          method : 'GET',
+          headers : {
+            'ngrok-skip-browser-warning': 'true'
+          } 
+        });
         const data = await res.json();
         console.log("Full data:", data);
         setArrayData(data.data || []);
@@ -39,7 +44,12 @@ function App() {
   useEffect(() => {
     const fetchCMP = async () => {
       try {
-        const res = await fetch("/api/prices");
+        const res = await fetch("/api/prices",{
+           method : 'GET',
+          headers : {
+            'ngrok-skip-browser-warning': 'true'
+          }
+        });
         const data = await res.json();
         console.log("CMP updated at:", new Date().toLocaleTimeString());
 
