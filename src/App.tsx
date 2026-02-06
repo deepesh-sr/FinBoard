@@ -8,10 +8,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 function App() {
   const [arrayData, setArrayData] = useState<any[]>([]);
-  
+
   // Fetch full stock details once
   useEffect(() => {
     const fetchData = async () => {
@@ -35,9 +44,9 @@ function App() {
         const res = await fetch("/api/prices");
         const data = await res.json();
         console.log("CMP updated at:", new Date().toLocaleTimeString());
-        
+
         // Update CMP prices by index (API returns prices in same order as stocks)
-        setArrayData(prevData => 
+        setArrayData(prevData =>
           prevData.map((stock, index) => ({
             ...stock,
             cmp: data.data[index]?.cmp ?? stock.cmp
@@ -48,8 +57,8 @@ function App() {
       }
     };
 
-    fetchCMP(); 
-    const interval = setInterval(fetchCMP, 10000); 
+    fetchCMP();
+    const interval = setInterval(fetchCMP, 10000);
     return () => clearInterval(interval);
   }, [])
 
@@ -65,6 +74,23 @@ function App() {
       <header className='border-b border-zinc-800 bg-zinc-950'>
         <div className='flex justify-between items-center px-8 py-4'>
           <h1 className='text-xl font-semibold tracking-wide'>FINBOARD</h1>
+          <div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline">Open</Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuGroup>
+                  <DropdownMenuLabel>Financial Sector</DropdownMenuLabel>
+                  <DropdownMenuItem>Tech Sector</DropdownMenuItem>
+                  <DropdownMenuItem>Consume Sector</DropdownMenuItem>
+                  <DropdownMenuItem>Power Sector</DropdownMenuItem>
+                  <DropdownMenuItem>Pipe Sector</DropdownMenuItem>
+                  <DropdownMenuItem>Other Sector</DropdownMenuItem>
+                </DropdownMenuGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
           <a href='https://github.com/deepesh-sr/FinBoard.git' className='text-sm text-zinc-400 hover:text-white transition'>
             SOURCE CODE
           </a>
